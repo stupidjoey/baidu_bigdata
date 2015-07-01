@@ -30,12 +30,13 @@ def get_feature(dataset,posdict):
         ent_pos_idx = []
         for w in words:
             # print "%s %s %s "  % (w.word, w.flag,posdict[w.flag])
-            if w.flag not in posdict.keys():
+            if w.flag not in posdict.keys():     ##  ~~~~~~~~~~~~~~~~~~~~~~~~~ change ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 continue
             posList.append(w.flag)
 
             if w.word == entity1 or w.word ==entity2:
                 ent_pos_idx.append(len(posList) - 1)
+        
         # print sentence
         # print ent_pos_idx
 

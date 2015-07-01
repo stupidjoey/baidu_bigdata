@@ -23,7 +23,6 @@ def main():
     with open(datapath) as f:
         dataset = f.readlines()    
 
-
     relation = [u'老师', u'妻子', u'同学', u'撞衫', u'前妻', u'前女友', u'老乡', u'传闻不和', u'经纪人', u'绯闻女友', u'闺蜜', u'偶像']
     relation_pinyin = ['laoshi','qizi','tongxue','zhuangshan','qianqi','qiannvyou','laoxiang','chuanwenbuhe','jingjiren','feiwennvyou','guimi','ouxiang']
 
@@ -78,10 +77,8 @@ def main():
         print 'start building model...'
 
         
-        clf = RandomForestClassifier(n_estimators=10)
+        clf = RandomForestClassifier(n_estimators=50)
         clf = clf.fit(xtrain, ytrain)
-
-
 
         print 'store the model...%s' % relation_pinyin[idx]
         modelname = 'data/classifier/%s_rf.pkl' % relation_pinyin[idx]
@@ -90,8 +87,6 @@ def main():
         modelfile.close()
 
         print 'finished...'
-
-
 
 
     endtime = datetime.datetime.now()
