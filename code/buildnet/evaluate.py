@@ -8,7 +8,6 @@ import os
 import re
 import numpy as np
 import pickle
-import relation_classifier as rc
 
 
 
@@ -18,7 +17,7 @@ def main():
     path = path.split('/')
     basepath = "/".join(path[:-2])
 
-    target_ent_pinyin = 'songqian'
+    target_ent_pinyin = 'linzhengying'
     
     tupupath = os.path.join(basepath,'data/train/entity_tupu/entity_tupu.%s' % target_ent_pinyin)
     with open(tupupath) as f:

@@ -2,14 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import jieba
-import jieba.posseg as pseg
 import os
 import re
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier
 import pickle
-
+import relation_classifier as rc
 
 def main():
     starttime = datetime.datetime.now()
@@ -18,32 +15,35 @@ def main():
     path = path.split('/')
     basepath = "/".join(path[:-2])
 
-    dictpath = os.path.join(basepath,'data/myDict.txt')
-    jieba.load_userdict(dictpath)
-    datapath = os.path.join(basepath,'data/train/relation_train/task1.trainSentence')
+
+    target_ent_pinyin = 'songzhixiao'
+    datapath = os.path.join(basepath,'data/train/entity_sentence/entity_sentence.%s' % target_ent_pinyin)
+    
     with open(datapath) as f:
         dataset = f.readlines()    
 
-    target_rel = u'朋友'
+    entity_set = [u'李栋旭',u'李多海']
+    rel = u'绯闻'
     for line in dataset:
         try:
             data = line[:-1].split('\t')
-            rel = data[0].decode('utf-8')
             entity1 = data[1].decode('utf-8')
             entity2 = data[2].decode('utf-8')
-            sentence = data[3].decode('utf-8')
-            mark = int(data[4])
-            if rel == target_rel:
-                if mark == 1:
-                    print sentence,entity1,entity2
+            if entity1 not in  entity_set or entity2 not in entity_set:
+                continue
+            sentence = data[0].decode('utf-8')
+            if rel not in sentence:
+                continue
+            sentence_len = len(sentence)
+            if sentence_len < 10 or sentence_len > 30:
+                continue
+            print sentence
+
         except Exception, e:
             print e
 
-  
-
     endtime = datetime.datetime.now()
     print 'elapsed time is %f'  %(endtime - starttime).seconds    
-
 
 
 

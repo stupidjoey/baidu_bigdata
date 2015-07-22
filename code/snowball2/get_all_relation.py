@@ -8,7 +8,6 @@ import os
 import re
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
-import feature_tool as ft
 import pickle
 
 ''' get all kinds of relations from the tupu data  '''
@@ -35,19 +34,23 @@ def main():
             rel = data[0].decode('utf-8')
             relation_dict.setdefault(rel,0)
             relation_dict[rel] += 1
-            if rel == u'qixia':
-                print line.decode('utf-8')
+         
 
     relation_dict = sorted(relation_dict.iteritems(), key = lambda x:x[1], reverse = True)
+    # for rel in relation_dict.keys():
+        # print rel,relation_dict[rel]
+    count =0 
+    for pair in relation_dict:
+        print pair[0],pair[1]
+        count += int(pair[1])
+    print count
 
-    # rel_datapath = os.path.join(basepath,'data/relation_pair.txt')
-    # with open(rel_datapath,'w') as f:
-    #     for pair in relation_dict:
-    #         if pair[1] >= 5:
-    #             f.write(pair[0].encode('utf-8')+'\n')
-    
 
-
+    rel_path  =  os.path.join(basepath,'data/all_relation.txt')
+    with open(rel_path,'w') as f:
+        for pair in relation_dict:
+            writestr = '%s\t%s\n' % (pair[0].encode('utf-8'),pair[1])
+            f.write(writestr)
 
 
 

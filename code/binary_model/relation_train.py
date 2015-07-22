@@ -75,7 +75,7 @@ def main():
 
     modelname = 'data/classifier/binary_relation_svm.pkl' 
     modelfile  = open(os.path.join(basepath,modelname),'w')
-    pickle.dump(clf,modelfile)
+    pickle.dump(clf ,modelfile)
     modelfile.close()
 
 
