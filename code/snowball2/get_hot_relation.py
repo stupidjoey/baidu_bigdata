@@ -17,7 +17,7 @@ def main():
     par_datapath = os.path.join(basepath,'data/train/entity_tupu/')
     filenamelist = os.listdir(par_datapath)
 
-    relation_dict = dict()
+    relation_count_dict = dict()
 
     for filename in filenamelist:
         datapath = os.path.join(basepath,'data/train/entity_tupu/%s' % filename)
@@ -29,29 +29,25 @@ def main():
             rel = data[0].decode('utf-8')
             entity1 = data[1].decode('utf-8')
             entity2 = data[2].decode('utf-8')
-            relation_dict.setdefault(rel,set())
-            if (entity1,entity2) not in relation_dict[rel] and (entity2,entity1) not in relation_dict[rel]:
-                pair = (entity1,entity2)
-                relation_dict[rel].add(pair)
-         
-    for rel in relation_dict.keys():
-        pairset = relation_dict[rel]
-        relation_dict[rel] = len(pairset)
+            layer = data[5]
+            if layer == 'layer3':
+                relation_count_dict[rel] = relation_count_dict.get(rel,0) + 1
 
-    relation_dict = sorted(relation_dict.iteritems(), key = lambda x:x[1], reverse = True)
+
+    relation_count_dict = sorted(relation_count_dict.iteritems(), key = lambda x:x[1], reverse = True)
 
 
 
     count =0 
-    for pair in relation_dict:
+    for pair in relation_count_dict:
         print pair[0],pair[1]
-        count += int(pair[1])
+        count += pair[1]
     print count
 
 
-    rel_path  =  os.path.join(basepath,'data/info/all_relation.txt')
+    rel_path  =  os.path.join(basepath,'data/info/layer3_hot_relation.txt')
     with open(rel_path,'w') as f:
-        for pair in relation_dict:
+        for pair in relation_count_dict:
             writestr = '%s\t%s\n' % (pair[0].encode('utf-8'),pair[1])
             f.write(writestr)
 

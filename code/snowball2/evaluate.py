@@ -18,7 +18,7 @@ def main():
     path = path.split('/')
     basepath = "/".join(path[:-2])
 
-    target_ent_pinyin = 'angelababy'
+    target_ent_pinyin = 'caijianya'
     
     tupupath = os.path.join(basepath,'data/train/entity_tupu/entity_tupu.%s' % target_ent_pinyin)
     with open(tupupath) as f:
@@ -76,22 +76,26 @@ def main():
         predict_pair = (pred_entity1,pred_entity2)
 
         if predict_pair in real_relation_map:
+            print pred_relation,predict_pair[0],predict_pair[1],pred_layer
             hit_count += 1
             if pred_relation == real_relation_map[predict_pair]:
                 relation_match_count += 1
 
-            if  pred_layer == 'layer1' :
-                layer1_pred_count += 1
-                if predict_pair in layer1_list:
-                    layer1_hit_count += 1
-            elif pred_layer == 'layer2' :
-                layer2_pred_count += 1
-                if predict_pair in layer2_list:
-                    layer2_hit_count += 1
-            elif pred_layer == 'layer3' :
-                layer3_pred_count += 1
-                if predict_pair in layer3_list:
-                    layer3_hit_count += 1
+        if  pred_layer == 'layer1' :
+            layer1_pred_count += 1
+            if predict_pair in layer1_list:
+                print pred_relation,predict_pair[0],predict_pair[1]
+                layer1_hit_count += 1
+        elif pred_layer == 'layer2' :
+            layer2_pred_count += 1
+            if predict_pair in layer2_list:
+                print pred_relation,predict_pair[0],predict_pair[1]
+                layer2_hit_count += 1
+        elif pred_layer == 'layer3' :
+            layer3_pred_count += 1
+            if predict_pair in layer3_list:
+                print pred_relation,predict_pair[0],predict_pair[1]
+                layer3_hit_count += 1
 
 
     total_count = len(real_relation_map.keys())
@@ -126,6 +130,15 @@ def main():
 
     hit_rate = hit_count * 1.0 /total_count
     print 'hitcount is %d, hit rate is %f ' % ( hit_count,hit_rate)
+    print 'total_count count is %d' % total_count
+    print 'relation_match_count is %d' % relation_match_count
+
+    print layer1_hit_count,layer2_hit_count,layer3_hit_count
+    print layer1_pred_count,layer2_pred_count,layer3_pred_count
+    print len(layer1_list),len(layer2_list),len(layer3_list)
+    print p1,p2,p3
+    print r1,r2,r3
+    print f1,f2,f3
 
 
     print 'final evaluation is %f' % final_eva

@@ -86,7 +86,6 @@ def main():
 
 
 
-
 def cut_sentence(sentence,entity1,entity2):
     seg_list = list( jieba.cut(sentence, cut_all = 'True') )
     
@@ -100,7 +99,6 @@ def cut_sentence(sentence,entity1,entity2):
     ent_idx2 = entity_idx_set[1]
 
     return [seg_list[0:ent_idx1],seg_list[ent_idx1+1:ent_idx2],seg_list[ent_idx2+1:],seg_list]
-
 
 
 
