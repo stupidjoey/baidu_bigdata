@@ -261,8 +261,7 @@ def pengyou_rule(sen_split):
         return u'朋友'
 
     # case2 A  B 好朋友
-    if len(mid) <=15 and \
-        keyword1 in right:
+    if  keyword1 in right:
             return u'朋友'
 
     return None

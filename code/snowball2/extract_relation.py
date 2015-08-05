@@ -45,12 +45,17 @@ def main():
                     data = line[:-1].split('\t')
                     entity1 = data[1]
                     entity2 = data[2]
+                    
                     sentence = data[0]
                     sentence_len = len(sentence)
                     if sentence_len < 30 or sentence_len > 90:
                         continue
                     pos1 = sentence.find(entity1)
                     pos2 = sentence.find(entity2)
+                    
+                    data_len = len(data)
+                    uid1 = data[data_len/2+1]
+                    uid2 = data[data_len/2+2]
 
                     if pos1 < pos2:
                         mid = sentence[pos1+len(entity1):pos2]
@@ -58,12 +63,16 @@ def main():
                         right = sentence[pos2+len(entity2):]
                         real_entity1 = entity1
                         real_entity2 = entity2
+                        real_uid1 = uid1
+                        real_uid2 = uid2
                     else:
                         mid = sentence[pos2+len(entity2):pos1]
                         left = sentence[:pos2]
                         right = sentence[pos1+len(entity1):]
                         real_entity1 = entity2
                         real_entity2 = entity1
+                        real_uid1 = uid2
+                        real_uid2 = uid1
 
                     if len(mid) > 30:
                         continue
@@ -75,8 +84,7 @@ def main():
                         continue
 
                     for relation in relationlist:
-                        if relation != None:
-                            relation_pair.append([real_entity1,real_entity2,relation])
+                        relation_pair.append([real_entity1,real_entity2,real_uid1,real_uid2,relation])
                     
                 except Exception, e:
                     print e

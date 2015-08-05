@@ -19,7 +19,7 @@ def main():
     basepath = "/".join(path[:-2])
 
     all_user_list = []
-    all_user_path =  os.path.join(basepath,'data/info/all_user.txt')
+    all_user_path =  os.path.join(basepath,'data/info/train_user.txt')
     with open(all_user_path) as f:
         for line in f:
             data = line[:-1].split('\t')
@@ -37,8 +37,9 @@ def main():
         print 'current user is %s ,%s' % (user[0],user[1])
 
         target_ent_pinyin = user[0]
-        
+
         tupupath = os.path.join(basepath,'data/train/entity_tupu/entity_tupu.%s' % target_ent_pinyin)
+        
         with open(tupupath) as f:
             tupu_data = f.readlines()
 
@@ -66,7 +67,7 @@ def main():
             real_relation_map[pair] = relation
 
 
-        predictpath = os.path.join(basepath,'data/output/predict/predict.%s' % target_ent_pinyin )
+        predictpath = os.path.join(basepath,'data/output/single_predict/predict.%s' % target_ent_pinyin )
         with open(predictpath) as f:  
             predict_tupu_data = f.readlines()
 
@@ -177,23 +178,23 @@ def main():
     print 'avg_final_eva is %f' % avg_final_eva
 
 
-    for rel in relation_hit_dict.keys():
-        pairset = relation_hit_dict[rel]
-        relation_hit_dict[rel] = len(pairset)
+    # for rel in relation_hit_dict.keys():
+    #     pairset = relation_hit_dict[rel]
+    #     relation_hit_dict[rel] = len(pairset)
 
 
-    for rel in relation_match_dict.keys():
-        pairset = relation_match_dict[rel]
-        relation_match_dict[rel] = len(pairset)
+    # for rel in relation_match_dict.keys():
+    #     pairset = relation_match_dict[rel]
+    #     relation_match_dict[rel] = len(pairset)
 
 
-    hit_dict_file = open(os.path.join(basepath,'data/info/relation_hit_dict.pkl') ,'w')
-    pickle.dump(relation_hit_dict,hit_dict_file)
-    hit_dict_file.close()
+    # hit_dict_file = open(os.path.join(basepath,'data/info/relation_hit_dict.pkl') ,'w')
+    # pickle.dump(relation_hit_dict,hit_dict_file)
+    # hit_dict_file.close()
 
-    match_dict_file = open(os.path.join(basepath,'data/info/relation_match_dict.pkl') ,'w')
-    pickle.dump(relation_match_dict,match_dict_file)
-    match_dict_file.close()
+    # match_dict_file = open(os.path.join(basepath,'data/info/relation_match_dict.pkl') ,'w')
+    # pickle.dump(relation_match_dict,match_dict_file)
+    # match_dict_file.close()
 
 
 

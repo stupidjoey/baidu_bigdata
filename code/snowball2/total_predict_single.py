@@ -11,11 +11,8 @@ def main():
     path = os.path.abspath('.').split('/')
     basepath = "/".join(path[:-2])
 
-    with open(os.path.join(basepath,'data/output/relation_map_8.3.pkl')) as f:
-        relation_map = pickle.load(f)
-
     all_user_list = []
-    with open( os.path.join(basepath,'data/info/all_user.txt')) as f:
+    with open( os.path.join(basepath,'data/info/train_user.txt')) as f:
         for line in f:
             data = line[:-1].split('\t')
             all_user_list.append([data[0],data[1].decode('utf-8')])
@@ -34,7 +31,10 @@ def main():
         target_ent_pinyin = user[0]
         target_ent_hanyu = user[1]
 
-        predictpath = os.path.join(basepath,'data/output/predict/predict.%s' % target_ent_pinyin )
+        with open(os.path.join(basepath,'data/output/single_relation_map_repair/relation_map_%s.pkl' % user[0])) as ff:
+            relation_map = pickle.load(ff)
+
+        predictpath = os.path.join(basepath,'data/output/single_predict/predict.%s' % target_ent_pinyin )
         with open(predictpath,'w') as f:   
             ent_set = set()
             layer = 1
